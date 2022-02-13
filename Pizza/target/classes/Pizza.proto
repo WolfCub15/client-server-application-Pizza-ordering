@@ -1,0 +1,95 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+package grpc;
+option java_multiple_files = true;
+option java_package = "grpc";
+option java_outer_classname = "PizzaServiceProto";
+
+message GetPizzaListRequest{
+    
+}
+message GetPizzaListResponse {
+  message PizzaList{
+    int32 pizzaId = 1;
+    string pizzaName = 2;
+    string pizzaDescription = 3;
+    double pizzaCost = 4;
+    int32 pizzaCount = 5;
+  }
+  repeated PizzaList pizzaList = 1;
+}
+
+message AddNewPizzaRequest {
+  string pizzaName = 1;
+  string pizzaDescription = 2;
+  double pizzaCost = 3;
+}
+
+message AddNewPizzaResponse{
+  int32 pizzaId = 1;   
+}
+
+message DelPizzaRequest{
+  int32 pizzaId = 1;   
+}
+
+message DelPizzaResponse{
+  string pizzaStatus = 1;   
+}
+
+message ChangePizzaStatusRequest{
+  int32 pizzaOrderNumber = 1;   
+  string pizzaStatus = 2;
+}
+
+message OrderPizzaRequest{
+  int32 pizzaId = 1;
+  int32 pizzaCount = 2;
+}
+
+message OrderPizzaResponse{
+  int32 pizzaOrderNumber = 1;
+  double pizzaCost = 2;
+}
+
+message OrderNPizzaRequest{
+    message PizzaList{
+        int32 pizzaId = 1;
+        int32 pizzaCount = 2;
+  }
+  repeated PizzaList pizzaList = 1;
+}
+
+message OrderNPizzaResponse{
+  int32 pizzaOrderNumber = 1;
+  double pizzaCost = 2;
+}
+
+message CheckOrderRequest{
+  int32 pizzaOrderNumber = 1;   
+}
+
+message CheckOrderResponse{
+  string pizzaStatus = 1;
+}
+
+message GetPizzaCountRequest{
+    
+}
+
+message GetPizzaCountResponse{
+    int32 pizzaCount = 1;   
+}
+
+
+service PizzaService {
+  rpc addNewPizza (AddNewPizzaRequest) returns (google.protobuf.Empty);
+  rpc getPizzaList(GetPizzaListRequest) returns (GetPizzaListResponse);
+  rpc delPizza (DelPizzaRequest) returns (DelPizzaResponse);
+  rpc changePizzaStatus (ChangePizzaStatusRequest) returns (google.protobuf.Empty);
+  rpc orderPizza (OrderPizzaRequest) returns (OrderPizzaResponse);
+  rpc orderNPizza (OrderNPizzaRequest) returns (OrderNPizzaResponse);
+  rpc checkOrder (CheckOrderRequest) returns (CheckOrderResponse);
+  rpc getPizzaCount (GetPizzaCountRequest) returns (GetPizzaCountResponse);
+}
